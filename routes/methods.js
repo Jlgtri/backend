@@ -137,7 +137,7 @@ router.get('/presale', async (req, res) => {
     );
 
     // Find the live, previous (ended), and next upcoming presales
-    const now = Date();
+    const now = new Date();
     let presale = presales.find(
       (presale) =>
         presale.starts_at > now && (!presale.ends_at || now < presale.ends_at),
