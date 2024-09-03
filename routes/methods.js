@@ -140,7 +140,7 @@ router.get('/presale', async (req, res) => {
     const now = new Date();
     let presale = presales.find(
       (presale) =>
-        presale.starts_at > now && (!presale.ends_at || now < presale.ends_at),
+        now > presale.starts_at && (!presale.ends_at || now < presale.ends_at),
     );
     presale ??= presales.find((presale) => now < presale.starts_at);
     presale ??= presales
