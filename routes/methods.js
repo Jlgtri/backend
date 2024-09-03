@@ -151,9 +151,7 @@ router.get('/presale', async (req, res) => {
       throw new Error('No live, previous, or upcoming presales found.');
     }
 
-    const nextPresale = presales.find(
-      (_) => _.starts_at > activePresale.starts_at,
-    );
+    const nextPresale = presales.find((_) => _.starts_at > presale.starts_at);
     const finalPresale = presales.reverse()[0];
 
     const [currentAmount] = await con.execute(
