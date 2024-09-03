@@ -142,10 +142,10 @@ router.get('/presale', async (req, res) => {
       (presale) =>
         presale.starts_at > now && (!presale.ends_at || now < presale.ends_at),
     );
-    presale ??= presales.find((presale) => now() < presale.starts_at);
+    presale ??= presales.find((presale) => now < presale.starts_at);
     presale ??= presales
       .reverse()
-      .find((presale) => presale.ends_at && now() > presale.ends_at);
+      .find((presale) => presale.ends_at && now > presale.ends_at);
     // If no presale is found, throw an error
     if (!presale) {
       throw new Error('No live, previous, or upcoming presales found.');
