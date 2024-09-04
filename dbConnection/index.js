@@ -2,21 +2,18 @@ const mysql = require('mysql2');
 
 // Function to establish a MySQL connection
 function connectToMySQL() {
-  const connection = mysql.createConnection({
+  const connection = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-  });
-
-  connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to MySQL:', err);
-      // Attempt to reconnect after a delay
-      setTimeout(connectToMySQL, 2000); // Retry connection after 2 seconds
-    } else {
-      console.log('Connected to MySQL');
-    }
+    waitForConnections: true,
+    connectionLimit: 10,
+    maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
+    idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0,
   });
 
   // Handle MySQL connection errors
